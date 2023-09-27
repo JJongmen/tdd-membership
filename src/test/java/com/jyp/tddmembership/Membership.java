@@ -21,13 +21,15 @@ public class Membership {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
     @Column(nullable = false, length = 20)
     private String userId;
 
     @Enumerated(EnumType.STRING)
-    private MembershipType membershipName;
+    @Column(nullable = false)
+    private MembershipType membershipType;
 
     @Column(nullable = false)
     @ColumnDefault("0")
