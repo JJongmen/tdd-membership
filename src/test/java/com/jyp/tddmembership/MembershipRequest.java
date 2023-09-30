@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotNull;
 public class MembershipRequest {
 
     @NotNull
+    @Min(0)
     private final Integer point;
 
     private final MembershipType membershipType;
