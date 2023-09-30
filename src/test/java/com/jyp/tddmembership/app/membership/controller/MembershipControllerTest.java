@@ -216,4 +216,34 @@ public class MembershipControllerTest {
         // then
         resultActions.andExpect(status().isNotFound());
     }
+
+    @Test
+    void 멤버십상세조회성공() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/-1";
+        doReturn(
+                MembershipDetailResponse.builder()
+                        .id(-1L)
+                        .membershipType(MembershipType.NAVER)
+                        .point(10000)
+                        .build()
+        ).when(membershipService).getMembership(-1L, "12345");
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+                        .header(USER_ID_HEADER, "12345")
+        );
+
+        // then
+        resultActions.andExpect(status().isOk());
+
+        final MembershipDetailResponse response = gson.fromJson(resultActions.andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8), MembershipDetailResponse.class);
+
+        assertThat(response.getId()).isEqualTo(-1);
+        assertThat(response.getMembershipType()).isEqualTo(MembershipType.NAVER);
+        assertThat(response.getPoint()).isEqualTo(10000);
+    }
 }

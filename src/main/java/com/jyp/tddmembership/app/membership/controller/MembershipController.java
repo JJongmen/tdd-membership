@@ -46,8 +46,7 @@ public class MembershipController {
     public ResponseEntity<MembershipDetailResponse> getMembership(
             @RequestHeader(USER_ID_HEADER) final String userId,
             @PathVariable final Long membershipId) {
-        final MembershipDetailResponse membershipDetailResponse = membershipService.getMembership(membershipId, userId);
 
-        return null;
+        return ResponseEntity.ok(membershipService.getMembership(membershipId, userId));
     }
 }
