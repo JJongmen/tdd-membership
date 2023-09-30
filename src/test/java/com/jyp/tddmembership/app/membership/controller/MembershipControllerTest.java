@@ -3,8 +3,8 @@ package com.jyp.tddmembership.app.membership.controller;
 import com.google.gson.Gson;
 import com.jyp.tddmembership.app.common.GlobalExceptionHandler;
 import com.jyp.tddmembership.app.enums.MembershipType;
-import com.jyp.tddmembership.app.membership.dto.MembershipRequest;
 import com.jyp.tddmembership.app.membership.dto.MembershipAddResponse;
+import com.jyp.tddmembership.app.membership.dto.MembershipRequest;
 import com.jyp.tddmembership.app.membership.service.MembershipService;
 import com.jyp.tddmembership.exception.MembershipErrorResult;
 import com.jyp.tddmembership.exception.MembershipException;
@@ -30,7 +30,6 @@ import java.util.stream.Stream;
 import static com.jyp.tddmembership.app.membership.constants.MembershipConstants.USER_ID_HEADER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
@@ -147,5 +146,19 @@ public class MembershipControllerTest {
                 .point(point)
                 .membershipType(membershipType)
                 .build();
+    }
+
+    @Test
+    void 멤버십목록조회실패_사용자식별값이헤더에없음() throws Exception {
+        // given
+        final String url = "/api/v1/memberships";
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
     }
 }
