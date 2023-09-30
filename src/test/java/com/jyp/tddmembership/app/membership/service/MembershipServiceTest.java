@@ -1,6 +1,7 @@
 package com.jyp.tddmembership.app.membership.service;
 
 import com.jyp.tddmembership.app.enums.MembershipType;
+import com.jyp.tddmembership.app.membership.dto.MembershipDetailResponse;
 import com.jyp.tddmembership.app.membership.dto.MembershipResponse;
 import com.jyp.tddmembership.app.membership.entity.Membership;
 import com.jyp.tddmembership.app.membership.repository.MembershipRepository;
@@ -82,7 +83,7 @@ public class MembershipServiceTest {
         )).when(membershipRepository).findAllByUserId(userId);
 
         // when
-        final List<Membership> result = target.getMembershipList(userId);
+        final List<MembershipDetailResponse> result = target.getMembershipList(userId);
 
         // then
         assertThat(result.size()).isEqualTo(3);

@@ -1,6 +1,7 @@
 package com.jyp.tddmembership.app.membership.service;
 
 import com.jyp.tddmembership.app.enums.MembershipType;
+import com.jyp.tddmembership.app.membership.dto.MembershipDetailResponse;
 import com.jyp.tddmembership.app.membership.dto.MembershipResponse;
 import com.jyp.tddmembership.app.membership.entity.Membership;
 import com.jyp.tddmembership.app.membership.repository.MembershipRepository;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +39,16 @@ public class MembershipService {
                 .build();
     }
 
-    public List<Membership> getMembershipList(final String userId) {
-        return membershipRepository.findAllByUserId(userId);
+    public List<MembershipDetailResponse> getMembershipList(final String userId) {
+        final List<Membership> membershipList = membershipRepository.findAllByUserId(userId);
+
+        return membershipList.stream()
+                .map(m -> MembershipDetailResponse.builder()
+                        .id(m.getId())
+                        .membershipType(m.getMembershipType())
+                        .point(m.getPoint())
+                        .createdAt(m.getCreatedAt())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
