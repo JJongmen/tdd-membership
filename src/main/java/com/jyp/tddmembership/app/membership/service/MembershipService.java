@@ -51,4 +51,11 @@ public class MembershipService {
                         .build())
                 .collect(Collectors.toList());
     }
+
+    public MembershipDetailResponse getMembership(final Long membershipId, final String userId) {
+        final Membership membership = membershipRepository.findById(membershipId)
+                .orElseThrow(() -> new MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND));
+
+        return null;
+    }
 }
