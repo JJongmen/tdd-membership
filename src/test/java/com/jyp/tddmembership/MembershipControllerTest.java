@@ -13,7 +13,11 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.nio.charset.StandardCharsets;
+
 import static com.jyp.tddmembership.MembershipConstants.USER_ID_HEADER;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -120,6 +124,35 @@ public class MembershipControllerTest {
 
         // then
         resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void 멤버십등록성공() throws Exception {
+        // given
+        final String url = "/api/v1/memberships";
+        final MembershipResponse membershipResponse = MembershipResponse.builder()
+                .id(-1L)
+                .membershipType(MembershipType.NAVER)
+                .build();
+        doReturn(membershipResponse).when(membershipService).addMembership("12345", MembershipType.NAVER, 10000);
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .content(gson.toJson(membershipRequest(10000, MembershipType.NAVER)))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        resultActions.andExpect(status().isCreated());
+
+        final MembershipResponse response = gson.fromJson(resultActions.andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8), MembershipResponse.class);
+
+        assertThat(response.getId()).isNotNull();
+        assertThat(response.getMembershipType()).isEqualTo(MembershipType.NAVER);
     }
 
     private MembershipRequest membershipRequest(final Integer point, final MembershipType membershipType) {
