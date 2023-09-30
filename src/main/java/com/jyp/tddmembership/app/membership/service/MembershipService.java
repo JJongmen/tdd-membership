@@ -59,6 +59,11 @@ public class MembershipService {
             throw new MembershipException(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
         }
 
-        return null;
+        return MembershipDetailResponse.builder()
+                .id(membership.getId())
+                .membershipType(membership.getMembershipType())
+                .point(membership.getPoint())
+                .createdAt(membership.getCreatedAt())
+                .build();
     }
 }
