@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 import static com.jyp.tddmembership.app.membership.constants.MembershipConstants.USER_ID_HEADER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
@@ -98,7 +99,7 @@ public class MembershipControllerTest {
     void 멤버십등록실패_MemberService에서에러Throw() throws Exception {
         // given
         final String url = "/api/v1/memberships";
-        Mockito.doThrow(new MembershipException(MembershipErrorResult.DUPLICATED_MEMBERSHIP_REGISTER))
+        doThrow(new MembershipException(MembershipErrorResult.DUPLICATED_MEMBERSHIP_REGISTER))
                 .when(membershipService)
                 .addMembership("12345", MembershipType.NAVER, 10000);
 
@@ -196,5 +197,23 @@ public class MembershipControllerTest {
 
         // then
         resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void 멤버십상세조회실패_멤버십이존재하지않음() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/-1";
+        doThrow(new MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND))
+                .when(membershipService)
+                .getMembership(-1L, "12345");
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+                        .header(USER_ID_HEADER, "12345")
+        );
+
+        // then
+        resultActions.andExpect(status().isNotFound());
     }
 }
