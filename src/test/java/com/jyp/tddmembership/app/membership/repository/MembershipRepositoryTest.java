@@ -1,6 +1,7 @@
-package com.jyp.tddmembership;
+package com.jyp.tddmembership.app.membership.repository;
 
-import org.junit.jupiter.api.Disabled;
+import com.jyp.tddmembership.app.membership.entity.Membership;
+import com.jyp.tddmembership.app.enums.MembershipType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

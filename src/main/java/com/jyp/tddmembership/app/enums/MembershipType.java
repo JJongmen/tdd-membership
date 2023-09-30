@@ -1,4 +1,4 @@
-package com.jyp.tddmembership;
+package com.jyp.tddmembership.app.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

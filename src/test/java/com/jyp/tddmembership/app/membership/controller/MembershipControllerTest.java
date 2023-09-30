@@ -1,6 +1,13 @@
-package com.jyp.tddmembership;
+package com.jyp.tddmembership.app.membership.controller;
 
 import com.google.gson.Gson;
+import com.jyp.tddmembership.app.common.GlobalExceptionHandler;
+import com.jyp.tddmembership.app.enums.MembershipType;
+import com.jyp.tddmembership.app.membership.dto.MembershipRequest;
+import com.jyp.tddmembership.app.membership.dto.MembershipResponse;
+import com.jyp.tddmembership.app.membership.service.MembershipService;
+import com.jyp.tddmembership.exception.MembershipErrorResult;
+import com.jyp.tddmembership.exception.MembershipException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +16,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,7 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
 
-import static com.jyp.tddmembership.MembershipConstants.USER_ID_HEADER;
+import static com.jyp.tddmembership.app.membership.constants.MembershipConstants.USER_ID_HEADER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -89,7 +97,7 @@ public class MembershipControllerTest {
     void 멤버십등록실패_MemberService에서에러Throw() throws Exception {
         // given
         final String url = "/api/v1/memberships";
-        doThrow(new MembershipException(MembershipErrorResult.DUPLICATED_MEMBERSHIP_REGISTER))
+        Mockito.doThrow(new MembershipException(MembershipErrorResult.DUPLICATED_MEMBERSHIP_REGISTER))
                 .when(membershipService)
                 .addMembership("12345", MembershipType.NAVER, 10000);
 

@@ -1,5 +1,11 @@
-package com.jyp.tddmembership;
+package com.jyp.tddmembership.app.membership.service;
 
+import com.jyp.tddmembership.app.enums.MembershipType;
+import com.jyp.tddmembership.app.membership.dto.MembershipResponse;
+import com.jyp.tddmembership.app.membership.entity.Membership;
+import com.jyp.tddmembership.app.membership.repository.MembershipRepository;
+import com.jyp.tddmembership.exception.MembershipErrorResult;
+import com.jyp.tddmembership.exception.MembershipException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

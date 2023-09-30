@@ -1,5 +1,7 @@
-package com.jyp.tddmembership;
+package com.jyp.tddmembership.app.common;
 
+import com.jyp.tddmembership.exception.MembershipErrorResult;
+import com.jyp.tddmembership.exception.MembershipException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

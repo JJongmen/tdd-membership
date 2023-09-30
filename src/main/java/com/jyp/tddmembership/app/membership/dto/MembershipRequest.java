@@ -1,5 +1,6 @@
-package com.jyp.tddmembership;
+package com.jyp.tddmembership.app.membership.dto;
 
+import com.jyp.tddmembership.app.enums.MembershipType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

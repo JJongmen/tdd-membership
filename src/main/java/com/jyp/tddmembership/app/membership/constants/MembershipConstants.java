@@ -1,4 +1,4 @@
-package com.jyp.tddmembership;
+package com.jyp.tddmembership.app.membership.constants;
 
 public final class MembershipConstants {
 

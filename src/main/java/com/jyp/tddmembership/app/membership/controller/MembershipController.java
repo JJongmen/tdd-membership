@@ -1,5 +1,8 @@
-package com.jyp.tddmembership;
+package com.jyp.tddmembership.app.membership.controller;
 
+import com.jyp.tddmembership.app.membership.dto.MembershipRequest;
+import com.jyp.tddmembership.app.membership.dto.MembershipResponse;
+import com.jyp.tddmembership.app.membership.service.MembershipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import static com.jyp.tddmembership.MembershipConstants.USER_ID_HEADER;
+import static com.jyp.tddmembership.app.membership.constants.MembershipConstants.USER_ID_HEADER;
 
 @RestController
 @RequiredArgsConstructor

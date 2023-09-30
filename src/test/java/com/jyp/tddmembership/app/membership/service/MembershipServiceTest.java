@@ -1,10 +1,16 @@
-package com.jyp.tddmembership;
+package com.jyp.tddmembership.app.membership.service;
 
-import org.assertj.core.api.Assertions;
+import com.jyp.tddmembership.app.enums.MembershipType;
+import com.jyp.tddmembership.app.membership.dto.MembershipResponse;
+import com.jyp.tddmembership.app.membership.entity.Membership;
+import com.jyp.tddmembership.app.membership.repository.MembershipRepository;
+import com.jyp.tddmembership.exception.MembershipErrorResult;
+import com.jyp.tddmembership.exception.MembershipException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +32,7 @@ public class MembershipServiceTest {
     @Test
     void 멤버십등록실패_이미존재함() {
         // given
-        doReturn(Membership.builder().build()).when(membershipRepository).findByUserIdAndMembershipType(userId, membershipType);
+        Mockito.doReturn(Membership.builder().build()).when(membershipRepository).findByUserIdAndMembershipType(userId, membershipType);
 
         // when
         final MembershipException result = assertThrows(MembershipException.class,

@@ -1,4 +1,4 @@
-package com.jyp.tddmembership;
+package com.jyp.tddmembership.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
