@@ -1,7 +1,7 @@
 package com.jyp.tddmembership.app.membership.controller;
 
 import com.jyp.tddmembership.app.membership.dto.MembershipRequest;
-import com.jyp.tddmembership.app.membership.dto.MembershipResponse;
+import com.jyp.tddmembership.app.membership.dto.MembershipAddResponse;
 import com.jyp.tddmembership.app.membership.service.MembershipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,16 +22,16 @@ public class MembershipController {
     private final MembershipService membershipService;
 
     @PostMapping("/api/v1/memberships")
-    public ResponseEntity<MembershipResponse> addMembership(
+    public ResponseEntity<MembershipAddResponse> addMembership(
             @RequestHeader(USER_ID_HEADER) final String userId,
             @RequestBody @Valid final MembershipRequest membershipRequest) {
 
-        final MembershipResponse membershipResponse = membershipService.addMembership(
+        final MembershipAddResponse membershipAddResponse = membershipService.addMembership(
                 userId,
                 membershipRequest.getMembershipType(),
                 membershipRequest.getPoint());
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(membershipResponse);
+                .body(membershipAddResponse);
     }
 }

@@ -2,7 +2,7 @@ package com.jyp.tddmembership.app.membership.service;
 
 import com.jyp.tddmembership.app.enums.MembershipType;
 import com.jyp.tddmembership.app.membership.dto.MembershipDetailResponse;
-import com.jyp.tddmembership.app.membership.dto.MembershipResponse;
+import com.jyp.tddmembership.app.membership.dto.MembershipAddResponse;
 import com.jyp.tddmembership.app.membership.entity.Membership;
 import com.jyp.tddmembership.app.membership.repository.MembershipRepository;
 import com.jyp.tddmembership.exception.MembershipErrorResult;
@@ -53,7 +53,7 @@ public class MembershipServiceTest {
         doReturn(membership()).when(membershipRepository).save(any(Membership.class));
 
         // when
-        final MembershipResponse result = target.addMembership(userId, membershipType, point);
+        final MembershipAddResponse result = target.addMembership(userId, membershipType, point);
 
         // then
         assertThat(result.getId()).isNotNull();
