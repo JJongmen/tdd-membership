@@ -18,6 +18,7 @@ public class MembershipRequest {
     @Min(0)
     private final Integer point;
 
+    @NotNull
     private final MembershipType membershipType;
 
 }
