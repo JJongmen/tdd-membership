@@ -102,4 +102,16 @@ public class MembershipServiceTest {
         // then
         assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
     }
+
+    @Test
+    void 멤버십상세조회실패_본인이아님() {
+        // given
+        doReturn(Optional.of(membership())).when(membershipRepository).findById(membershipId);
+
+        // when
+        final MembershipException result = assertThrows(MembershipException.class, () -> target.getMembership(membershipId, "notowner"));
+
+        // then
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
+    }
 }

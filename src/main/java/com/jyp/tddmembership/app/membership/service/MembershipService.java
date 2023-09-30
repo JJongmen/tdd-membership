@@ -55,6 +55,9 @@ public class MembershipService {
     public MembershipDetailResponse getMembership(final Long membershipId, final String userId) {
         final Membership membership = membershipRepository.findById(membershipId)
                 .orElseThrow(() -> new MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND));
+        if (!userId.equals(membership.getUserId())) {
+            throw new MembershipException(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
+        }
 
         return null;
     }
