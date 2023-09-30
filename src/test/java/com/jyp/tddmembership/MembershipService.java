@@ -9,7 +9,7 @@ public class MembershipService {
 
     private final MembershipRepository membershipRepository;
 
-    public Membership addMembership(final String userId, final MembershipType membershipType, final Integer point) {
+    public MembershipResponse addMembership(final String userId, final MembershipType membershipType, final Integer point) {
         final Membership result = membershipRepository.findByUserIdAndMembershipType(userId, membershipType);
         if (result != null) {
             throw new MembershipException(MembershipErrorResult.DUPLICATED_MEMBERSHIP_REGISTER);
@@ -21,6 +21,11 @@ public class MembershipService {
                 .point(point)
                 .build();
 
-        return membershipRepository.save(membership);
+        final Membership savedMembership = membershipRepository.save(membership);
+
+        return MembershipResponse.builder()
+                .id(savedMembership.getId())
+                .membershipType(savedMembership.getMembershipType())
+                .build();
     }
 }

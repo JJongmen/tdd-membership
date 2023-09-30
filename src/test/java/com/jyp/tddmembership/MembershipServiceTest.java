@@ -43,7 +43,7 @@ public class MembershipServiceTest {
         doReturn(membership()).when(membershipRepository).save(any(Membership.class));
 
         // when
-        final Membership result = target.addMembership(userId, membershipType, point);
+        final MembershipResponse result = target.addMembership(userId, membershipType, point);
 
         // then
         assertThat(result.getId()).isNotNull();
