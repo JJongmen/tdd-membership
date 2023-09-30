@@ -1,6 +1,7 @@
 package com.jyp.tddmembership;
 
 import com.google.gson.Gson;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,11 +20,9 @@ public class MembershipControllerTest {
     private MockMvc mockMvc;
     private Gson gson;
 
-    @Test
-    void mockMvc가Null이아님() throws Exception {
+    @BeforeEach
+    void init() {
         mockMvc = MockMvcBuilders.standaloneSetup(target)
                 .build();
-        assertThat(target).isNotNull();
-        assertThat(mockMvc).isNotNull();
     }
 }
