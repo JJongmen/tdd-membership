@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.jyp.tddmembership.app.common.GlobalExceptionHandler;
 import com.jyp.tddmembership.app.enums.MembershipType;
 import com.jyp.tddmembership.app.membership.dto.MembershipAddResponse;
+import com.jyp.tddmembership.app.membership.dto.MembershipDetailResponse;
 import com.jyp.tddmembership.app.membership.dto.MembershipRequest;
 import com.jyp.tddmembership.app.membership.service.MembershipService;
 import com.jyp.tddmembership.exception.MembershipErrorResult;
@@ -25,6 +26,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static com.jyp.tddmembership.app.membership.constants.MembershipConstants.USER_ID_HEADER;
@@ -160,5 +162,25 @@ public class MembershipControllerTest {
 
         // then
         resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void 멤버십목록조회성공() throws Exception {
+        // given
+        final String url = "/api/v1/memberships";
+        doReturn(Arrays.asList(
+                MembershipDetailResponse.builder().build(),
+                MembershipDetailResponse.builder().build(),
+                MembershipDetailResponse.builder().build()
+        )).when(membershipService).getMembershipList("12345");
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+                        .header(USER_ID_HEADER, "12345")
+        );
+
+        // then
+        resultActions.andExpect(status().isOk());
     }
 }

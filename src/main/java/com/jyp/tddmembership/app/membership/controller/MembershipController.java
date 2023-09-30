@@ -39,6 +39,6 @@ public class MembershipController {
     public ResponseEntity<List<MembershipDetailResponse>> getMembershipList(
             @RequestHeader(USER_ID_HEADER) final String userId) {
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(membershipService.getMembershipList(userId));
     }
 }
