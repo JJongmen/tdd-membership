@@ -76,4 +76,9 @@ public class MembershipService {
 
         membershipRepository.deleteById(membershipId);
     }
+
+    public void accumulatePoint(final Long membershipId, final String userId, final int amount) {
+        final Membership membership = membershipRepository.findById(membershipId)
+                .orElseThrow(() -> new MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND));
+    }
 }

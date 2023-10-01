@@ -166,4 +166,16 @@ public class MembershipServiceTest {
         // verify
         verify(membershipRepository, times(1)).deleteById(membershipId);
     }
+
+    @Test
+    void 멤버십적립실패_존재하지않음() {
+        // then
+        doReturn(Optional.empty()).when(membershipRepository).findById(membershipId);
+
+        // when
+        final MembershipException result = assertThrows(MembershipException.class, () -> target.accumulatePoint(membershipId, userId, 10000));
+
+        // then
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
+    }
 }
