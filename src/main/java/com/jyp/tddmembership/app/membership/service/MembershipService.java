@@ -5,20 +5,25 @@ import com.jyp.tddmembership.app.membership.dto.MembershipDetailResponse;
 import com.jyp.tddmembership.app.membership.dto.MembershipAddResponse;
 import com.jyp.tddmembership.app.membership.entity.Membership;
 import com.jyp.tddmembership.app.membership.repository.MembershipRepository;
+import com.jyp.tddmembership.app.point.service.PointService;
 import com.jyp.tddmembership.exception.MembershipErrorResult;
 import com.jyp.tddmembership.exception.MembershipException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MembershipService {
 
+    private final PointService ratePointService;
     private final MembershipRepository membershipRepository;
 
+    @Transactional
     public MembershipAddResponse addMembership(final String userId, final MembershipType membershipType, final Integer point) {
         final Membership result = membershipRepository.findByUserIdAndMembershipType(userId, membershipType);
         if (result != null) {
@@ -67,6 +72,7 @@ public class MembershipService {
                 .build();
     }
 
+    @Transactional
     public void removeMembership(final Long membershipId, final String userId) {
         final Membership membership = membershipRepository.findById(membershipId)
                 .orElseThrow(() -> new MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND));
@@ -77,11 +83,15 @@ public class MembershipService {
         membershipRepository.deleteById(membershipId);
     }
 
+    @Transactional
     public void accumulatePoint(final Long membershipId, final String userId, final int amount) {
         final Membership membership = membershipRepository.findById(membershipId)
                 .orElseThrow(() -> new MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND));
         if (!userId.equals(membership.getUserId())) {
             throw new MembershipException(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
         }
+
+        final int additionalAmount = ratePointService.calculateAmount(amount);
+        membership.setPoint(additionalAmount + membership.getPoint());
     }
 }

@@ -1,10 +1,11 @@
 package com.jyp.tddmembership.app.membership.service;
 
 import com.jyp.tddmembership.app.enums.MembershipType;
-import com.jyp.tddmembership.app.membership.dto.MembershipDetailResponse;
 import com.jyp.tddmembership.app.membership.dto.MembershipAddResponse;
+import com.jyp.tddmembership.app.membership.dto.MembershipDetailResponse;
 import com.jyp.tddmembership.app.membership.entity.Membership;
 import com.jyp.tddmembership.app.membership.repository.MembershipRepository;
+import com.jyp.tddmembership.app.point.service.RatePointService;
 import com.jyp.tddmembership.exception.MembershipErrorResult;
 import com.jyp.tddmembership.exception.MembershipException;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,8 @@ public class MembershipServiceTest {
     private MembershipService target;
     @Mock
     private MembershipRepository membershipRepository;
+    @Mock
+    private RatePointService ratePointService;
     private final String userId = "userId";
     private final MembershipType membershipType = MembershipType.NAVER;
     private final Integer point = 10000;
@@ -189,5 +192,19 @@ public class MembershipServiceTest {
 
         // then
         assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
+    }
+
+    @Test
+    void 멤버십적립성공() {
+        // when
+        doReturn(Optional.of(membership())).when(membershipRepository).findById(membershipId);
+
+        // when
+        target.accumulatePoint(membershipId, userId, 10000);
+
+        // then
+
+        // verify
+        verify(ratePointService, times(1)).calculateAmount(10000);
     }
 }

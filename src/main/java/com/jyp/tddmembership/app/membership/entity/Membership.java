@@ -1,10 +1,7 @@
 package com.jyp.tddmembership.app.membership.entity;
 
 import com.jyp.tddmembership.app.enums.MembershipType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -32,6 +29,7 @@ public class Membership {
     @Column(nullable = false)
     private MembershipType membershipType;
 
+    @Setter
     @Column(nullable = false)
     @ColumnDefault("0")
     private Integer point;
