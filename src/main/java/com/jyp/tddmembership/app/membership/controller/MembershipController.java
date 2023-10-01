@@ -63,7 +63,7 @@ public class MembershipController {
     public ResponseEntity<Void> accumulateMembershipPoint(
             @RequestHeader(USER_ID_HEADER) final String userId,
             @PathVariable final Long membershipId,
-            @RequestBody final MembershipRequest membershipRequest) {
+            @RequestBody @Valid final MembershipRequest membershipRequest) {
         return null;
     }
 }
