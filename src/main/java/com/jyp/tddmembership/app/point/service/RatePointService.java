@@ -1,4 +1,4 @@
-package com.jyp.tddmembership.app.point;
+package com.jyp.tddmembership.app.point.service;
 
 import org.springframework.stereotype.Service;
 
