@@ -151,4 +151,19 @@ public class MembershipServiceTest {
         // then
         assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
     }
+
+    @Test
+    void 멤버십삭제성공() {
+        // given
+        doReturn(Optional.of(membership())).when(membershipRepository).findById(membershipId);
+
+        // when
+        target.removeMembership(membershipId, userId);
+
+        // then
+
+
+        // verify
+        verify(membershipRepository, times(1)).deleteById(membershipId);
+    }
 }

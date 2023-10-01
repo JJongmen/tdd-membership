@@ -73,5 +73,7 @@ public class MembershipService {
         if (!userId.equals(membership.getUserId())) {
             throw new MembershipException(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
         }
+
+        membershipRepository.deleteById(membershipId);
     }
 }
