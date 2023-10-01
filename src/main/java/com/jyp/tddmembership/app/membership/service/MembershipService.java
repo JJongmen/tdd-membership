@@ -66,4 +66,9 @@ public class MembershipService {
                 .createdAt(membership.getCreatedAt())
                 .build();
     }
+
+    public void removeMembership(final Long membershipId, final String userId) {
+        final Membership membership = membershipRepository.findById(membershipId)
+                .orElseThrow(() -> new MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND));
+    }
 }
