@@ -308,6 +308,23 @@ public class MembershipControllerTest {
         resultActions.andExpect(status().isBadRequest());
     }
 
+    @Test
+    void 멤버십적립성공() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/-1/accumulate";
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .content(gson.toJson(membershipRequest(10000)))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        resultActions.andExpect(status().isNoContent());
+    }
+
     private MembershipRequest membershipRequest(final Integer point) {
         return MembershipRequest.builder()
                 .point(point)
