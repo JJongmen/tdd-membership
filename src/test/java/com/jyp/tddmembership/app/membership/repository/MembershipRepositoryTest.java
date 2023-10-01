@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -91,5 +92,24 @@ public class MembershipRepositoryTest {
 
         // then
         assertThat(result.size()).isEqualTo(2);
+    }
+
+    @Test
+    void 멤버십추가후삭제() {
+        // given
+        final Membership naverMembership = Membership.builder()
+                .userId("userId")
+                .membershipType(MembershipType.NAVER)
+                .point(10000)
+                .build();
+
+        final Membership savedMembership = membershipRepository.save(naverMembership);
+
+        // when
+        membershipRepository.deleteById(savedMembership.getId());
+
+        // then
+        final Optional<Membership> optionalMembership = membershipRepository.findById(savedMembership.getId());
+        assertThat(optionalMembership.isPresent()).isFalse();
     }
 }
