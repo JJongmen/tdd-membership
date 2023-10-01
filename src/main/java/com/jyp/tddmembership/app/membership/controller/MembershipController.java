@@ -55,6 +55,7 @@ public class MembershipController {
             @RequestHeader(USER_ID_HEADER) final String userId,
             @PathVariable final Long membershipId) {
 
-        return null;
+        membershipService.removeMembership(membershipId, userId);
+        return ResponseEntity.noContent().build();
     }
 }
